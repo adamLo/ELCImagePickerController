@@ -9,6 +9,7 @@
 #import "ELCAssetCell.h"
 #import "ELCAsset.h"
 #import "ELCAlbumPickerController.h"
+#import "UINavigationController+LimnCustomization.h"
 
 @interface ELCAssetTablePicker ()
 
@@ -27,6 +28,14 @@
 
 - (void)viewDidLoad
 {
+    
+    //Customize navigation controller
+    [self.navigationController customizeNavigationbarForLimn];
+    
+    //Customize tableview
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background_pattern"]];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 	[self.tableView setAllowsSelection:NO];
 

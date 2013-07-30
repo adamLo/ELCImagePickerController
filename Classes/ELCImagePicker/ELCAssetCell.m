@@ -37,6 +37,8 @@
         [overlayArray release];
 
         [self setAssets:assets];
+        
+        //Customization for limn
 	}
 	return self;
 }
@@ -69,7 +71,9 @@
             overlayView.hidden = asset.selected ? NO : YES;
         } else {
             if (overlayImage == nil) {
-                overlayImage = [UIImage imageNamed:@"Overlay.png"];
+                //overlayImage = [UIImage imageNamed:@"Overlay.png"];
+                //Customization for Limn
+                overlayImage = [UIImage imageNamed:@"selectedphoto_overlay"];
             }
             UIImageView *overlayView = [[UIImageView alloc] initWithImage:overlayImage];
             [_overlayViewArray addObject:overlayView];
