@@ -38,7 +38,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     
-	[self.navigationItem setTitle:@"Loading..."];
+	[self.navigationItem setTitle:NSLocalizedString(@"Loading...",@"Loading albums title on album picker screen")];
 
     //UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self.parent action:@selector(cancelImagePicker)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel button on album picker screen") style:UIBarButtonItemStyleBordered target:self.parent action:@selector(cancelImagePicker)];
@@ -102,7 +102,7 @@
 - (void)reloadTableView
 {
 	[self.tableView reloadData];
-	[self.navigationItem setTitle:@"Select an Album"];
+	[self.navigationItem setTitle:NSLocalizedString(@"Select an Album",@"Select album title on album picker screen")];
 }
 
 - (void)selectedAssets:(NSArray*)assets
