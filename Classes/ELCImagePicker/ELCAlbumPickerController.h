@@ -14,5 +14,8 @@
 @property (nonatomic, assign) id<ELCAssetSelectionDelegate> parent;
 @property (nonatomic, retain) NSMutableArray *assetGroups;
 
+@property (assign) NSInteger minimumSelection; /** Minimum number of required selection */
+@property (assign) NSInteger maximumSelection; /** Maximum number of required selection */
+
 @end
 

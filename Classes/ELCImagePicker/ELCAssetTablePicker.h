@@ -9,8 +9,11 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "ELCAsset.h"
 #import "ELCAssetSelectionDelegate.h"
+#import "ELCImageSelectionDelegate.h"
 
-@interface ELCAssetTablePicker : UITableViewController <ELCAssetDelegate>
+@interface ELCAssetTablePicker : UITableViewController <ELCAssetDelegate, ELCImageSelectionDelegate> {
+    UITableView *tableView;
+}
 
 @property (nonatomic, assign) id <ELCAssetSelectionDelegate> parent;
 @property (nonatomic, retain) ALAssetsGroup *assetGroup;
@@ -18,6 +21,9 @@
 @property (nonatomic, retain) IBOutlet UILabel *selectedAssetsLabel;
 @property (nonatomic, assign) BOOL singleSelection;
 @property (nonatomic, assign) BOOL immediateReturn;
+
+@property (assign) NSInteger minimumSelection; /** Minimum number of required selection */
+@property (assign) NSInteger maximumSelection; /** Maximum number of required selection */
 
 - (int)totalSelectedAssets;
 - (void)preparePhotos;

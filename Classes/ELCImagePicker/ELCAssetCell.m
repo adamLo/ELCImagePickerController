@@ -19,6 +19,7 @@
 @implementation ELCAssetCell
 
 @synthesize rowAssets = _rowAssets;
+@synthesize delegate;
 
 - (id)initWithAssets:(NSArray *)assets reuseIdentifier:(NSString *)identifier
 {
@@ -83,8 +84,8 @@
     }
 }
 
-- (void)cellTapped:(UITapGestureRecognizer *)tapRecognizer
-{
+- (void)cellTapped:(UITapGestureRecognizer *)tapRecognizer {
+    
     CGPoint point = [tapRecognizer locationInView:self];
     CGFloat totalWidth = self.rowAssets.count * 75 + (self.rowAssets.count - 1) * 4;
     CGFloat startX = (self.bounds.size.width - totalWidth) / 2;
@@ -94,9 +95,20 @@
 	for (int i = 0; i < [_rowAssets count]; ++i) {
         if (CGRectContainsPoint(frame, point)) {
             ELCAsset *asset = [_rowAssets objectAtIndex:i];
-            asset.selected = !asset.selected;
-            UIImageView *overlayView = [_overlayViewArray objectAtIndex:i];
-            overlayView.hidden = !asset.selected;
+            
+            if (asset.selected || (! asset.selected && delegate && [delegate respondsToSelector:@selector(canSelectMore)] && [[delegate performSelector:@selector(canSelectMore)] boolValue])) {
+                //Delegate does not forbid more selection
+            
+                asset.selected = !asset.selected;
+                UIImageView *overlayView = [_overlayViewArray objectAtIndex:i];
+                overlayView.hidden = !asset.selected;
+            
+                //Notify parent about change
+                if (delegate && [delegate respondsToSelector:@selector(selectionChangedWithSelected:)]) {
+                    [delegate performSelector:@selector(selectionChangedWithSelected:) withObject:[NSNumber numberWithBool:asset.selected]];
+                }
+            }
+            
             break;
         }
         frame.origin.x = frame.origin.x + frame.size.width + 4;
