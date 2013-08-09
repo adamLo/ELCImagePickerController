@@ -14,6 +14,7 @@
 @interface ELCAssetTablePicker () {
     UILabel *selectedLabel; /** Label to indicate how many images have been selected */
     UILabel *instructionLabel; /** Label to indicate whether to change selection or press done */
+    UIImageView *bubbleImageView; /** ImageView holding bubble behind text labels */
     NSInteger selectedCount; /** Count of selected images */
 }
 
@@ -22,6 +23,10 @@
 @end
 
 @implementation ELCAssetTablePicker
+
+#define BLUEBUBBLE [UIImage imageNamed:@"album_bubble_bg_blue"]
+#define PINKBUBBLE [UIImage imageNamed:@"album_bubble_bg_pink"]
+#define GREENBUBBLE [UIImage imageNamed:@"album_bubble_bg_green"]
 
 @synthesize parent = _parent;;
 @synthesize selectedAssetsLabel = _selectedAssetsLabel;
@@ -100,11 +105,16 @@
 }
      
 - (UIView*)createHeaderView {
-    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 70)];
     header.backgroundColor = [UIColor clearColor];
     
+    //Bubble image view
+    bubbleImageView = [[[UIImageView alloc] initWithFrame:CGRectMake(63, 9, 193, 52)] autorelease];
+    bubbleImageView.image = BLUEBUBBLE;
+    [header addSubview:bubbleImageView];
+    
     //Selection label
-    selectedLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320, 21)] autorelease];
+    selectedLabel = [[[UILabel alloc] initWithFrame:CGRectMake(63, 15, 193, 21)] autorelease];
     selectedLabel.backgroundColor = [UIColor clearColor];
     selectedLabel.textColor = [UIColor whiteColor];
     selectedLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:12.0];
@@ -113,7 +123,7 @@
     [header addSubview:selectedLabel];
     
     //Instruction label
-    instructionLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 21, 320, 21)] autorelease];
+    instructionLabel = [[[UILabel alloc] initWithFrame:CGRectMake(63, 32, 193, 21)] autorelease];
     instructionLabel.backgroundColor = [UIColor clearColor];
     instructionLabel.textColor = [UIColor whiteColor];
     instructionLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:12.0];
@@ -299,14 +309,17 @@
     if ((minimumSelection > 0) && (selectedCount < minimumSelection)) {
         instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Please select %d more photos", @"Select more photos label on image picker screen"),minimumSelection-selectedCount];
         self.navigationItem.rightBarButtonItem.enabled = NO;
+        bubbleImageView.image = BLUEBUBBLE;
     }
     else if ((maximumSelection > 0) && (selectedCount > maximumSelection)) {
         instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Please deselect %d photos", @"Deselect photos label on image picker screen"),selectedCount-maximumSelection];
         self.navigationItem.rightBarButtonItem.enabled = NO;
+        bubbleImageView.image = PINKBUBBLE;
     }
     else {
         instructionLabel.text = NSLocalizedString(@"You may press Done to complete", @"Reached desired amount of selected image on image picker screen");
         self.navigationItem.rightBarButtonItem.enabled = YES;
+        bubbleImageView.image = GREENBUBBLE;
     }
     
 }
