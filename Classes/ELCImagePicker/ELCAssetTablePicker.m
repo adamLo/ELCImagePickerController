@@ -119,7 +119,7 @@
     selectedLabel.textColor = [UIColor whiteColor];
     selectedLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:12.0];
     selectedLabel.textAlignment = NSTextAlignmentCenter;
-    selectedLabel.text = [NSString stringWithFormat:NSLocalizedString(@"You have selected %d photos", @"Count of selected photos on image picker screen"),0];
+    selectedLabel.text = @"";
     [header addSubview:selectedLabel];
     
     //Instruction label
@@ -128,8 +128,11 @@
     instructionLabel.textColor = [UIColor whiteColor];
     instructionLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:12.0];
     instructionLabel.textAlignment = NSTextAlignmentCenter;
-    instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Please select %d more photos", @"Select more photos label on image picker screen"),minimumSelection];
+    instructionLabel.text = @"";
     [header addSubview:instructionLabel];
+    
+    //Update selection
+    [self selectionChangedWithSelected:@0];
     
     return header;
 }
@@ -304,7 +307,12 @@
         }
     }
     
-    selectedLabel.text = [NSString stringWithFormat:NSLocalizedString(@"You have selected %d photos", @"Count of selected photos on image picker screen"),selectedCount];
+    if (selectedCount == 0) {
+        selectedLabel.text = [NSString stringWithFormat:NSLocalizedString(@"No photos selected", @"No photos selected on image picker screen"),selectedCount];
+    }
+    else {
+        selectedLabel.text = [NSString stringWithFormat:NSLocalizedString(@"You have selected %d photos", @"Count of selected photos on image picker screen"),selectedCount];
+    }
     
     if ((minimumSelection > 0) && (selectedCount < minimumSelection)) {
         instructionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Please select %d more photos", @"Select more photos label on image picker screen"),minimumSelection-selectedCount];
