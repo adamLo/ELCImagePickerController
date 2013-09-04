@@ -35,11 +35,12 @@
     //Customize navigation controller
     [self.navigationController customizeNavigationbarForLimn];
     
+    [self setNeedsStatusBarAppearanceUpdate];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     //Customize tableview
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background_pattern"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     
 	[self.navigationItem setTitle:NSLocalizedString(@"Loading...",@"Loading albums title on album picker screen")];
 
@@ -102,6 +103,10 @@
     });    
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
+}
+
 - (void)reloadTableView
 {
 	[self.tableView reloadData];
@@ -137,6 +142,8 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundColor = [UIColor clearColor];
+        cell.contentView.backgroundColor = [UIColor clearColor];
     }
     
     // Get count

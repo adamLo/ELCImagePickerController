@@ -44,6 +44,8 @@
     //Customize navigation controller
     [self.navigationController customizeNavigationbarForLimn];
     
+    [self setNeedsStatusBarAppearanceUpdate];
+    
     //Customize tableview    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -68,6 +70,10 @@
     }
 
 	[self performSelectorInBackground:@selector(preparePhotos) withObject:nil];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 - (UITableView*)tableView
