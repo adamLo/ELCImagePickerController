@@ -9,6 +9,7 @@
 #import "ELCImagePickerController.h"
 #import "ELCAssetTablePicker.h"
 #import "UINavigationController+LimnCustomization.h"
+#import "SystemVersion.h"
 
 @interface ELCAlbumPickerController ()
 
@@ -35,7 +36,10 @@
     //Customize navigation controller
     [self.navigationController customizeNavigationbarForLimn];
     
-    [self setNeedsStatusBarAppearanceUpdate];
+    if (IOS7) {
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     //Customize tableview

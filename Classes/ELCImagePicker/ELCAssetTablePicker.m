@@ -10,6 +10,7 @@
 #import "ELCAsset.h"
 #import "ELCAlbumPickerController.h"
 #import "UINavigationController+LimnCustomization.h"
+#import "SystemVersion.h"
 
 @interface ELCAssetTablePicker () {
     UILabel *selectedLabel; /** Label to indicate how many images have been selected */
@@ -44,7 +45,9 @@
     //Customize navigation controller
     [self.navigationController customizeNavigationbarForLimn];
     
-    [self setNeedsStatusBarAppearanceUpdate];
+    if (IOS7) {
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
     
     //Customize tableview    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
