@@ -29,16 +29,15 @@
 #pragma mark -
 #pragma mark View lifecycle
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-    //Customize navigation controller
-    [self.navigationController customizeNavigationbarForLimn];
-    
     if (IOS7) {
         [self setNeedsStatusBarAppearanceUpdate];
     }
+    
+    [self.navigationController customizeNavigationbarForLimn];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
@@ -50,6 +49,7 @@
 
     //UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self.parent action:@selector(cancelImagePicker)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel button on album picker screen") style:UIBarButtonItemStyleBordered target:self.parent action:@selector(cancelImagePicker)];
+    //UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel button on album picker screen") style:UIBarButtonItemStyleBordered target:self.parent action:@selector(cancelImagePicker)];
 	[self.navigationItem setRightBarButtonItem:cancelButton];
 	[cancelButton release];
 
