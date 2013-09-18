@@ -107,6 +107,15 @@
     });    
 }
 
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationItem setTitle:NSLocalizedString(@"Select an Album",@"Select album title on album picker screen")];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    self.navigationItem.title = NSLocalizedString(@"Albums", @"Short back button title on photo selection screen");
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }

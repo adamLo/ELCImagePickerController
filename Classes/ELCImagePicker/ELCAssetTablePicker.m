@@ -55,6 +55,7 @@
     
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 	[self.tableView setAllowsSelection:NO];
+    self.tableView.backgroundColor = [UIColor clearColor];
     //headerView = [self createHeaderView];
 
     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
@@ -67,7 +68,8 @@
     if (self.immediateReturn) {
         
     } else {
-        UIBarButtonItem *doneButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)] autorelease];
+        //UIBarButtonItem *doneButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)] autorelease];
+        UIBarButtonItem *doneButtonItem = [[[UIBarButtonItem alloc]  initWithTitle:NSLocalizedString(@"Done", @"Done button title") style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)] autorelease];
         [self.navigationItem setRightBarButtonItem:doneButtonItem];
         [self.navigationItem setTitle:NSLocalizedString(@"Loading...",@"Loading title on image picker screen")];
     }
@@ -153,6 +155,12 @@
     
     //Set done button status
     self.navigationItem.rightBarButtonItem.enabled = (minimumSelection == 0) || (selectedCount >= minimumSelection);
+    
+    //Scroll down to the bottom
+    NSInteger rowCount = [self.tableView numberOfRowsInSection:0];
+    if (rowCount > 0) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:rowCount inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -270,7 +278,7 @@
 
     } else {		
 		[cell setAssets:[self assetsForIndexPath:indexPath]];
-	}
+	}    
     
     return cell;
 }
@@ -347,5 +355,6 @@
     return [NSNumber numberWithBool:YES];
     //return [NSNumber numberWithBool:((maximumSelection == 0) || (selectedCount < maximumSelection))];
 }
+
 
 @end
