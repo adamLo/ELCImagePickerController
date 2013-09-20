@@ -48,8 +48,7 @@
 	[self.navigationItem setTitle:NSLocalizedString(@"Loading...",@"Loading albums title on album picker screen")];
 
     //UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self.parent action:@selector(cancelImagePicker)];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel button on album picker screen") style:UIBarButtonItemStyleBordered target:self.parent action:@selector(cancelImagePicker)];
-    //UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel button on album picker screen") style:UIBarButtonItemStyleBordered target:self.parent action:@selector(cancelImagePicker)];
+    UIBarButtonItem *cancelButton = [[self.navigationController customButtonForTarget:self.parent touchSelector:@selector(cancelImagePicker) withStyle:BUTTONSTYLECANCEL] retain];
 	[self.navigationItem setRightBarButtonItem:cancelButton];
 	[cancelButton release];
 

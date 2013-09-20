@@ -69,12 +69,24 @@
         
     } else {
         //UIBarButtonItem *doneButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)] autorelease];
-        UIBarButtonItem *doneButtonItem = [[[UIBarButtonItem alloc]  initWithTitle:NSLocalizedString(@"Done", @"Done button title") style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)] autorelease];
+        UIBarButtonItem *doneButtonItem;
+//        if (IOS7) {
+            doneButtonItem = [[self.navigationController customButtonForTarget:self touchSelector:@selector(doneAction:) withStyle:BUTTONSTYLEDONE] retain];
+/*        }
+        else {
+            doneButtonItem = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"Done button title") style:UIBarButtonItemStyleDone target:self action:@selector(doneAction:)] autorelease];
+        }*/
         [self.navigationItem setRightBarButtonItem:doneButtonItem];
         [self.navigationItem setTitle:NSLocalizedString(@"Loading...",@"Loading title on image picker screen")];
+        
+        self.navigationItem.leftBarButtonItem = [[self.navigationController customButtonForTarget:self touchSelector:@selector(popBack) withStyle:BUTTONSTYLEBACK] retain];
     }
 
 	[self performSelectorInBackground:@selector(preparePhotos) withObject:nil];
+}
+
+- (void)popBack {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle{
