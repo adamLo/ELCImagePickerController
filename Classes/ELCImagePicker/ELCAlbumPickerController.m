@@ -163,7 +163,7 @@
     [g setAssetsFilter:[ALAssetsFilter allPhotos]];
     NSInteger gCount = [g numberOfAssets];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%d)",[g valueForProperty:ALAssetsGroupPropertyName], gCount];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%ld)",[g valueForProperty:ALAssetsGroupPropertyName], (long)gCount];
     [cell.imageView setImage:[UIImage imageWithCGImage:[(ALAssetsGroup*)[self.assetGroups objectAtIndex:indexPath.row] posterImage]]];
 	//[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
@@ -189,6 +189,8 @@
     picker.assetGroup = [self.assetGroups objectAtIndex:indexPath.row];
     [picker.assetGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
     
+	picker.assetPickerFilterDelegate = self.assetPickerFilterDelegate;
+	
 	[self.navigationController pushViewController:picker animated:YES];
 	[picker release];
 }

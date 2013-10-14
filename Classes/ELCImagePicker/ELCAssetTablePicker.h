@@ -10,6 +10,7 @@
 #import "ELCAsset.h"
 #import "ELCAssetSelectionDelegate.h"
 #import "ELCImageSelectionDelegate.h"
+#import "ELCAssetPickerFilterDelegate.h"
 
 @interface ELCAssetTablePicker : UITableViewController <ELCAssetDelegate, ELCImageSelectionDelegate> {
     UITableView *tableView;
@@ -24,6 +25,9 @@
 
 @property (assign) NSInteger minimumSelection; /** Minimum number of required selection */
 @property (assign) NSInteger maximumSelection; /** Maximum number of required selection */
+
+// optional, can be used to filter the assets displayed
+@property(nonatomic, assign) id<ELCAssetPickerFilterDelegate> assetPickerFilterDelegate;
 
 - (int)totalSelectedAssets;
 - (void)preparePhotos;

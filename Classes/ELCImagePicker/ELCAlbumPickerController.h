@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "ELCAssetSelectionDelegate.h"
+#import "ELCAssetPickerFilterDelegate.h"
 
 @interface ELCAlbumPickerController : UITableViewController <ELCAssetSelectionDelegate>
 
@@ -16,6 +17,9 @@
 
 @property (assign) NSInteger minimumSelection; /** Minimum number of required selection */
 @property (assign) NSInteger maximumSelection; /** Maximum number of required selection */
+
+// optional, can be used to filter the assets displayed
+@property (nonatomic, assign) id<ELCAssetPickerFilterDelegate> assetPickerFilterDelegate;
 
 @end
 

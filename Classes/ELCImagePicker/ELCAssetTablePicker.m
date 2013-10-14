@@ -200,7 +200,18 @@
 
         ELCAsset *elcAsset = [[ELCAsset alloc] initWithAsset:result];
         [elcAsset setParent:self];
-        [self.elcAssets addObject:elcAsset];
+        
+        BOOL isAssetFiltered = NO;
+        if (self.assetPickerFilterDelegate &&
+           [self.assetPickerFilterDelegate respondsToSelector:@selector(assetTablePicker:isAssetFilteredOut:)])
+        {
+	        isAssetFiltered = [self.assetPickerFilterDelegate assetTablePicker:self isAssetFilteredOut:(ELCAsset*)elcAsset];
+        }
+
+        if (!isAssetFiltered) {
+	        [self.elcAssets addObject:elcAsset];
+        }
+        
         [elcAsset release];
      }];
     NSLog(@"done enumerating photos");
@@ -208,8 +219,8 @@
     dispatch_sync(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
         // scroll to bottom
-        int section = [self numberOfSectionsInTableView:self.tableView] - 1;
-        int row = [self tableView:self.tableView numberOfRowsInSection:section] - 1;
+        long section = [self numberOfSectionsInTableView:self.tableView] - 1;
+        long row = [self tableView:self.tableView numberOfRowsInSection:section] - 1;
         if (section >= 0 && row >= 0) {
             NSIndexPath *ip = [NSIndexPath indexPathForRow:row
                                                  inSection:section];
@@ -272,8 +283,8 @@
 
 - (NSArray *)assetsForIndexPath:(NSIndexPath *)path
 {
-    int index = path.row * self.columns;
-    int length = MIN(self.columns, [self.elcAssets count] - index);
+    long index = path.row * self.columns;
+    long length = MIN(self.columns, [self.elcAssets count] - index);
     return [self.elcAssets subarrayWithRange:NSMakeRange(index, length)];
 }
 
