@@ -171,7 +171,7 @@
     //Scroll down to the bottom
     NSInteger rowCount = [self.tableView numberOfRowsInSection:0];
     if (rowCount > 0) {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:rowCount inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:rowCount-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
     }
 }
 
