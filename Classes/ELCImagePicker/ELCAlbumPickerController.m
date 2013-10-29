@@ -11,6 +11,12 @@
 #import "UINavigationController+LimnCustomization.h"
 #import "SystemVersion.h"
 
+//GA
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
+#import "PQGoogleAnalytics.h"
+
 @interface ELCAlbumPickerController ()
 
 @property (nonatomic, retain) ALAssetsLibrary *library;
@@ -111,6 +117,13 @@
     [self.navigationItem setTitle:NSLocalizedString(@"Select an Album",@"Select album title on album picker screen")];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    //Manually track view
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:GA_SCREEN_SELECTALBUM];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     self.navigationItem.title = NSLocalizedString(@"Albums", @"Short back button title on photo selection screen");
 }
@@ -190,6 +203,16 @@
     [picker.assetGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
     
 	picker.assetPickerFilterDelegate = self.assetPickerFilterDelegate;
+    
+    //Send GA event
+    NSString *gaLabel;
+    ALAssetsGroup *g = (ALAssetsGroup*)[self.assetGroups objectAtIndex:indexPath.row];
+    gaLabel = [g valueForProperty:ALAssetsGroupPropertyName];
+    if (gaLabel.length == 0) {
+        gaLabel = @"No name";
+    }
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:GA_CATEGORY_ALBUM action:GA_ACTION_SELECTALBUM label:gaLabel value:nil] build]];
+
 	
 	[self.navigationController pushViewController:picker animated:YES];
 	[picker release];

@@ -12,6 +12,12 @@
 #import "UINavigationController+LimnCustomization.h"
 #import "SystemVersion.h"
 
+//GA
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+#import "GAIFields.h"
+#import "PQGoogleAnalytics.h"
+
 @interface ELCAssetTablePicker () {
     UILabel *selectedLabel; /** Label to indicate how many images have been selected */
     UILabel *instructionLabel; /** Label to indicate whether to change selection or press done */
@@ -83,6 +89,13 @@
     }
 
 	[self performSelectorInBackground:@selector(preparePhotos) withObject:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    //Manually track view
+    id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:GA_SCREEN_SELECTPHOTO];
+    [tracker send:[[GAIDictionaryBuilder createAppView] build]];
 }
 
 - (void)popBack {
@@ -346,6 +359,9 @@
             }
         }
     }
+    
+    //Send GA event
+    [[[GAI sharedInstance] defaultTracker] send:[[GAIDictionaryBuilder createEventWithCategory:GA_CATEGORY_PHOTO action:GA_ACTION_PHOTOTOUCHED label:(selected.boolValue ? GA_LABEL_SELECT : GA_LABEL_DESELECT) value:nil] build]];
     
     if (selectedCount == 0) {
         selectedLabel.text = [NSString stringWithFormat:NSLocalizedString(@"No photos selected", @"No photos selected on image picker screen"),selectedCount];
