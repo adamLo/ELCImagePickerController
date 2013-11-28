@@ -96,7 +96,7 @@
         // Group Enumerator Failure Block
         void (^assetGroupEnumberatorFailure)(NSError *) = ^(NSError *error) {
             
-            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Album Error: %@ - %@", [error localizedDescription], [error localizedRecoverySuggestion]] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error dialog title") message:NSLocalizedString(@"Please enable Limn to access photos in Settings!", @"Error message when user declined access to photos") delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [alert show];
             [alert release];
             
